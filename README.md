@@ -16,3 +16,11 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Light mode:
+
+![Light mode image](/screenshots/Light%20Mode.png)
+
+## Dark mode:
+
+![Dark mode image](/screenshots/Dark%20mode.png)
