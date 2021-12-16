@@ -1,5 +1,7 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import { getLocale } from '../../locales/locales';
 import Avatar from '../Avatar';
 import Stack from '../Stack';
 import Body1 from '../Typography/Body1';
@@ -18,6 +20,10 @@ const MainDiv = styled.div`
   width: 253px;
 `;
 
+const Container = styled.div`
+  position: relative;
+`;
+
 export default function VideoCard({
   title,
   avatarUrl,
@@ -26,21 +32,30 @@ export default function VideoCard({
   date,
   thumbnailUrl
 }: VideoCardProps) {
+  const { locale } = useRouter();
+  const translation = getLocale(locale);
+
   return (
     <MainDiv>
       <Stack direction="column" spacing="10px">
-        <Image
+        <img
           width="100%"
           height="142px"
           alt="video thumbnail"
           src={thumbnailUrl}
         />
+
         <Stack
           direction="row"
           spacing="10px"
           style={{ alignItems: 'flex-start', flexWrap: 'nowrap' }}
         >
-          <Avatar width="40px" height="40px" src={avatarUrl} />
+          <Avatar
+            width="40px"
+            height="40px"
+            src={avatarUrl}
+            objectPosition=""
+          />
           <Stack
             direction="column"
             style={{ alignItems: 'flex-start' }}
@@ -49,7 +64,7 @@ export default function VideoCard({
             <Body1>{title}</Body1>
             <Body2>{channelName}</Body2>
             <Body2>
-              {views} visualizações ⦁ {date.toLocaleString()}
+              {`${views} ${translation.views} ⦁ ${date.toLocaleString()}`}
             </Body2>
           </Stack>
         </Stack>

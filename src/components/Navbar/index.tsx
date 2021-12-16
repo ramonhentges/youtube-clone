@@ -1,15 +1,18 @@
-import {
-  AppsOutlined,
-  KeyboardVoice,
-  MenuSharp,
-  NotificationsOutlined,
-  SearchOutlined,
-  VideoCallOutlined
-} from '@mui/icons-material';
 import styled, { useTheme } from 'styled-components';
-import { useMyTheme } from '../../contexts/Theme';
 import YouTubeLogo from '../../Images/logo';
-import Avatar from '../Avatar';
+import Icon from '@mdi/react';
+import {
+  mdiMenu,
+  mdiApps,
+  mdiMagnify,
+  mdiMicrophone,
+  mdiVideoPlusOutline,
+  mdiBellOutline
+} from '@mdi/js';
+import MyIcon from '../MyIcon';
+import { useRouter } from 'next/router';
+import { getLocale } from '../../locales/locales';
+import AvatarMenu from '../AvatarMenu';
 
 const MainDiv = styled.div`
   background-color: ${(props) => props.theme.pallete.paper};
@@ -18,15 +21,6 @@ const MainDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
-
-const MenuIcon = styled(MenuSharp)`
-  cursor: pointer;
-  border-radius: 50%;
-  padding: 8px;
-  &:active {
-    background-color: ${(props) => props.theme.pallete.hover};
-  }
 `;
 
 const SearchInput = styled.input`
@@ -47,7 +41,7 @@ const SearchInput = styled.input`
   }
 `;
 
-const SearchIcon = styled(SearchOutlined)`
+const SearchIcon = styled(Icon)`
   color: ${(props) => props.theme.text.secondary};
   margin: 0 auto;
 `;
@@ -60,10 +54,6 @@ const SearchButton = styled.button`
   border: none;
 `;
 
-const SpeechIcon = styled(KeyboardVoice)`
-  margin: 0 auto;
-`;
-
 const SpeechButton = styled.button`
   cursor: pointer;
   background-color: ${(props) => props.theme.pallete.background};
@@ -71,34 +61,22 @@ const SpeechButton = styled.button`
   border-radius: 50%;
   width: 45px;
   height: 45px;
-`;
-
-const VideoCallIcon = styled(VideoCallOutlined)`
-  cursor: pointer;
-  width: 40px;
-  margin: 0 auto;
-`;
-const AppsIcon = styled(AppsOutlined)`
-  cursor: pointer;
-  width: 40px;
-  margin: 0 auto;
-`;
-
-const NotificationIcon = styled(NotificationsOutlined)`
-  cursor: pointer;
-  width: 40px;
-  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export default function Navbar() {
   const themeContext = useTheme();
-  const { changeTheme } = useMyTheme();
+  const { locale } = useRouter();
+  const translation = getLocale(locale);
+
   return (
     <MainDiv>
       <div
         style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
       >
-        <MenuIcon />
+        <MyIcon path={mdiMenu} size={1} />
         <div>
           <YouTubeLogo color={themeContext.text.primary} />
         </div>
@@ -118,13 +96,18 @@ export default function Navbar() {
             alignItems: 'center'
           }}
         >
-          <SearchInput placeholder="Pesquisar" />
+          <SearchInput placeholder={translation.search} list="searchList" />
+          <datalist id="searchList">
+            <option value="Vintage" />
+            <option value="Alok" />
+            <option value="TypeScript" />
+          </datalist>
           <SearchButton>
-            <SearchIcon />
+            <SearchIcon size={1} path={mdiMagnify} />
           </SearchButton>
         </div>
         <SpeechButton>
-          <SpeechIcon />
+          <Icon size={1} path={mdiMicrophone} />
         </SpeechButton>
       </div>
       <div
@@ -135,15 +118,11 @@ export default function Navbar() {
           gap: '10px'
         }}
       >
-        <VideoCallIcon />
-        <AppsIcon />
-        <NotificationIcon />
-        <Avatar
-          width="40px"
-          height="40px"
-          src="/avatar.jpg"
-          onClick={changeTheme}
-        />
+        <MyIcon size={1} path={mdiVideoPlusOutline} />
+        <MyIcon size={1} path={mdiApps} />
+        <MyIcon size={1} path={mdiBellOutline} />
+
+        <AvatarMenu />
       </div>
     </MainDiv>
   );

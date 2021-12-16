@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { dark, light } from './pallete';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import reset from 'styled-reset';
 
 type ContextProps = {
   changeTheme: () => void;
@@ -8,16 +9,12 @@ type ContextProps = {
 };
 
 const GlobalStyle = createGlobalStyle`
+  ${reset}
   main {
     font-family: ${(props) => props.theme.fontFamily};
     background-color: ${(props) => props.theme.pallete.background};
-    min-height: 100vh;
   }
   body {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    min-height: 100%;
     font-family: ${(props) => props.theme.fontFamily};
     background-color: ${(props) => props.theme.pallete.background};
     &::-webkit-scrollbar {
@@ -33,7 +30,6 @@ const GlobalStyle = createGlobalStyle`
   }
   svg {
     color: ${(props) => props.theme.text.primary};
-    margin-right: 5px;
   }
   h3 {
     color: ${(props) => props.theme.text.secondary};
