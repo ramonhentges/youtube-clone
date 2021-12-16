@@ -1,4 +1,6 @@
+import { useRouter } from 'next/router';
 import { useTheme } from 'styled-components';
+import { getLocale } from '../../locales/locales';
 import Chip from '../Chip';
 import Stack from '../Stack';
 
@@ -15,6 +17,8 @@ const items = [
 
 export default function Suggestions() {
   const theme = useTheme();
+  const { locale } = useRouter();
+  const translate = getLocale(locale);
   return (
     <Stack
       style={{
@@ -25,7 +29,7 @@ export default function Suggestions() {
       }}
       spacing="10px"
     >
-      <Chip variant="default">Tudo</Chip>
+      <Chip variant="default">{translate.all}</Chip>
       {items.map((item) => (
         <Chip key={item} variant="outlined">
           {item}
